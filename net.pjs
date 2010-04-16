@@ -1,0 +1,90 @@
+class Node
+{
+  float x, y;
+  String name;
+  int diameter;
+  color col;
+  
+  //Constructor
+  Node(String nodeName, float xpos, float ypos, int Diameter, color clr) 
+  {
+    x = xpos;
+    y = ypos;
+    name = nodeName;
+    diameter = Diameter;
+    col = clr;
+    nodes.add(this);
+  }
+  
+  void draw()
+  {
+    fill(col);
+    noStroke();
+    ellipse(x, y, diameter, diameter);
+  }
+}
+
+
+class Edge
+{
+  Node to;
+  Node from;
+  float value;
+  color col;
+  
+  Edge(Node from, Node to, float value, color Color)
+  {
+    this.to = to;
+    this.from = from;
+    this.value = value;
+    this.col = Color;
+  }
+  
+  void draw()
+  {
+    stroke(col);
+    strokeWeight(value);
+    line(from.x, from.y, to.x, to.y);
+  }
+  
+}
+
+HashMap nodeList;
+ArrayList edgeList;
+ArrayList nodes;
+
+void setup()
+{
+  size(500, 500);
+  noStroke();
+  smooth();
+  nodeList = new HashMap();
+  edgeList = new ArrayList();
+  nodes = new ArrayList();
+  nodeList.put("a", new Node("a", random(width), random(height), random(20, 50), rand_color()));
+  nodeList.put("b", new Node("b", random(width), random(height), random(20, 40), rand_color()));
+  Node a = (Node) nodeList.get("a");
+  Node b = (Node) nodeList.get("b");
+  edgeList.add(new Edge(a, b, random(1,10), rand_color()));
+}
+
+void draw()
+{
+  background(#FFFFFF);
+  
+  for (int j=0; j < edgeList.size(); j++)
+  {
+    Edge e = (Edge) edgeList.get(j);
+    e.draw();
+  }  
+  
+  for (int i=0; i < nodes.size(); i++) 
+  {
+    nodes[i].draw();
+  }
+}
+
+color rand_color()
+{
+    return color(int(random(255)), int(random(255)), int(random(255)), int(random(255)));
+}
